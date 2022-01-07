@@ -7,3 +7,8 @@ class TestCovidDataRequests(unittest.TestCase):
         data = CovidDataDriver()
         response = data.get_data()
         assert response['status_code'] == 200
+
+    def test_covid_data_fetch_returns_entityt_result_in_response(self):
+        data = CovidDataDriver()
+        response = data.get_data()
+        assert len(json.loads(response['data'])) > 0

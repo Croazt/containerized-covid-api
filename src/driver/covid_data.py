@@ -1,6 +1,13 @@
+import json
+import requests
 class CovidDataDriver:
     def __init__(self) :
-        pass
+        self.init_data = self.init_data()
 
+    def init_data(self):
+        responses = requests.get('https://data.covid19.go.id/public/api/update.json')
+        return {'status_code' : responses.status_code, 'data' : json.dumps(responses.json())}
+
+        
     def get_data(self):
-        return {'status_code' : 200}
+        return self.init_data
