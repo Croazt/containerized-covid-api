@@ -23,9 +23,8 @@ class CovidDataDriver:
         'new_recovered' : data['update']['penambahan']['jumlah_sembuh'],
         'new_active' : data['update']['penambahan']['jumlah_positif'] -data['update']['penambahan']['jumlah_sembuh'],
         'new_deaths' : data['update']['penambahan']['jumlah_meninggal']}
-
+        
         return data_total
-
 
     def get_data_total(self):
         return self.data_total

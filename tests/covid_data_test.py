@@ -18,6 +18,10 @@ class TestCovidDataRequests(unittest.TestCase):
         driver = CovidDataDriver()
         data = (driver.get_data_total())
 
-        print(data)
         self.assertIsInstance(data, dict)
 
+    def test_covid_data_extract_periodically_returns_dataframe(self) :
+        driver = CovidDataDriver()
+        data = driver.get_data_periodic()
+      
+        assert {'key', 'positive', 'recovered', 'deaths'}.issubset(data_periodic_temp)
