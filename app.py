@@ -1,12 +1,12 @@
-from flask import Flask, render_template, request
+from fastapi import FastAPI, Response, status
 import json
+import uvicorn
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route('/')
-def index():
-    response = {'ok':True, 'data':[], 'message' : 'Api is on!'}
-    return json.dumps(response)
+@app.get('/')
+def index(response : Response):
+    return {'ok':True, 'data':[], 'message' : 'Api is on!'}
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    uvicorn.run('app:app', host='127.0.0.1', port=8080, log_level="info",reload=True)

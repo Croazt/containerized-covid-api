@@ -1,10 +1,11 @@
 import json
-
 class CustomResponse:
-    def success_response(self, data, message, code_status=200):
-        response = {'ok' : True, 'data' : data, 'message' : message}
-        return json.dumps(response), code_status, {'ContentType':'application/json'}
+    def success_response(self, res, data, message, code_status=200):
+        res.status_code = code_status
+        response = {'ok': True, 'data': data, 'message': message}
+        return response
 
-    def error_response(self, data, message, code_status=404):
-        response = {'ok' : False, 'data' : data, 'message' : message}
-        return json.dumps(response), code_status, {'ContentType':'application/json'}
+    def error_response(self, res, data, message, code_status=404):
+        res.status_code = code_status
+        response = {'ok': False, 'data': data, 'message': message}
+        return response
