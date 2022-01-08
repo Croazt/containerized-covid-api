@@ -14,5 +14,5 @@ class TestRoot(unittest.TestCase):
     def test_root_endpoint_returns_general_data_result_in_response(self):
         with TestClient(app) as client:
             response = client.get('/')
-            data = json.loads(response.get_data())
+            data = response.json()
             assert ('total_positive' in data['data']) and ('total_recovered' in data['data']) and ('total_deaths' in data['data']) and ('total_active' in data['data'])
