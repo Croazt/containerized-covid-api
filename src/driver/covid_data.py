@@ -1,9 +1,8 @@
 import json
 import requests
 import pandas as pd
-
-
-class CovidDataDriver:
+from src.interface.driver.covid_data import CovidDataDriverInt
+class CovidDataDriver(CovidDataDriverInt):
     def __init__(self):
         self.init_data = self.init_data()
         self.data_total = self.init_data_total()
@@ -14,7 +13,7 @@ class CovidDataDriver:
             'https://data.covid19.go.id/public/api/update.json')
         return {'status_code': responses.status_code, 'data': json.dumps(responses.json())}
 
-    def get_data(self):
+    def get_data(self) ->dict:
         return self.init_data
 
     def init_data_total(self):
@@ -31,7 +30,7 @@ class CovidDataDriver:
 
         return data_total
 
-    def get_data_total(self):
+    def get_data_total(self) -> dict:
         return self.data_total
 
     def init_data_periodic(self):
@@ -49,12 +48,12 @@ class CovidDataDriver:
 
         df_data_periodic = df_data_periodic.from_dict(d,orient="index")
         key = pd.to_datetime(df_data_periodic['key'], unit='ms')
-        
+
         df_data_periodic = df_data_periodic.join(pd.DataFrame({'year' : key.dt.year}))
         df_data_periodic = df_data_periodic.join(pd.DataFrame({'month' : key.dt.month}))
         df_data_periodic = df_data_periodic.join(pd.DataFrame({'date' : key.dt.day}))
 
         return df_data_periodic
 
-    def get_data_periodic(self):
+    def get_data_periodic(self) :
         return self.data_periodic
