@@ -3,5 +3,6 @@ tmp
 venv
 __pycache__/
 **/__pycache__/
+.pyc
 .vscode
 tests/__pycache__/*
