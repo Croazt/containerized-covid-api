@@ -24,4 +24,4 @@ class TestCovidDataRequests(unittest.TestCase):
         driver = CovidDataDriver()
         data = driver.get_data_periodic()
       
-        assert {'key', 'positive', 'recovered', 'deaths'}.issubset(data_periodic_temp)
+        assert {'key', 'positive', 'recovered', 'deaths'}.issubset(data)

@@ -1,10 +1,13 @@
 import json
 import requests
 import pandas as pd
+
+
 class CovidDataDriver:
     def __init__(self):
         self.init_data = self.init_data()
         self.data_total = self.init_data_total()
+        self.data_periodic = self.init_data_periodic()
 
     def init_data(self):
         responses = requests.get(
@@ -30,3 +33,28 @@ class CovidDataDriver:
 
     def get_data_total(self):
         return self.data_total
+
+    def init_data_periodic(self):
+        data = json.loads(self.init_data['data'])['update']['harian']
+
+        df_data_periodic = pd.DataFrame(
+            columns=['key', 'positive', 'recovered', 'deaths'])
+        d = {}
+
+        i = 0
+        for data_daily in data:
+            d[i] = {'key': data_daily['key'], 'positive': data_daily['jumlah_positif']['value'], 'recovered':  data_daily['jumlah_sembuh']
+                    ['value'], 'deaths': data_daily['jumlah_meninggal']['value']}
+            i = i+1
+
+        df_data_periodic = df_data_periodic.from_dict(d,orient="index")
+        key = pd.to_datetime(df_data_periodic['key'], unit='ms')
+        
+        df_data_periodic = df_data_periodic.join(pd.DataFrame({'year' : key.dt.year}))
+        df_data_periodic = df_data_periodic.join(pd.DataFrame({'month' : key.dt.month}))
+        df_data_periodic = df_data_periodic.join(pd.DataFrame({'date' : key.dt.day}))
+
+        return df_data_periodic
+
+    def get_data_periodic(self):
+        return self.data_periodic
