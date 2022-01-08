@@ -14,4 +14,4 @@ class TestRoot(unittest.TestCase):
         with app.test_client() as client:
             response = client.get('/')
             data = json.loads(response.get_data())
-            assert ('total_positive' in data['data']) and ('total_recovered' in data['data'][0]) and ('total_deaths' in data['data'][0]) and ('total_active' in data['data'][0])
+            assert ('total_positive' in data['data']) and ('total_recovered' in data['data']) and ('total_deaths' in data['data']) and ('total_active' in data['data'])
