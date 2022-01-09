@@ -93,3 +93,10 @@ class DailyData(unittest.TestCase):
             data = response.json()
             assert ('date' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
             assert data['data'][0]['date'].split('-')[0] == '2021'
+
+    def test_daily_data_resource_given_year_params_since_value_return_dict_contain_data_range_since_to_upto(self):
+        with TestClient(app) as client:
+            response = client.get('/daily/2021?since=1.2&upto=5.2')
+            data = response.json()
+            assert ('date' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
+            assert data['data'][0]['date'].split('-')[0] == '2021'
