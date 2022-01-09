@@ -1,9 +1,10 @@
 import unittest
 import json
 import pandas as pd
+import re
 
 from src.driver.covid_data import CovidDataDriver
-from src.repository.periodically_data_repository import PeriodicallyDataRepository
+from src.repository.periodically_data_repository import PeriodicallyDataRepository, replace_fillz
 from fastapi.testclient import TestClient
 from src.domain.periodically_data import Yearly
 from src.domain.periodically_data import Monthly
@@ -84,3 +85,10 @@ class MonthlyData(unittest.TestCase):
         repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
         data = repository.get_monthly_data()
         self.assertIsInstance(data, Monthly)
+
+    def test_periodically_data_repository_given_string_returning_modified_string(self):
+        word = replace_fillz('2020.1')
+        pattern = re.compile("^[0-9][0-9][0-9][0-9].[0-9][0-9]")
+        
+        assert pattern.match(word)
+        assert word == "2020-01"
