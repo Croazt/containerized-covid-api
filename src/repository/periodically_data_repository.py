@@ -15,7 +15,8 @@ class PeriodicallyDataRepository(PeriodicallyDataRepository):
         data = self.covid_driver.get_data_periodic()
 
         res = data.groupby(['year'])['positive','recovered','deaths'].sum().reset_index()
-        
+        res = res[res['year'].between(int(since),int(upto))]
+
         res['active'] = res['positive'] - res['recovered'] - res['deaths']
         res =Yearly(res.to_dict(orient="records"))
 
