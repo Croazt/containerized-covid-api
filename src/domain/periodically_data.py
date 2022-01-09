@@ -13,3 +13,15 @@ class Year:
 @dataclass(frozen=True)
 class Yearly(Collection[Year]):
     values: [Year]
+
+@dataclass(frozen=True)
+class Month:
+    month: str
+    positive: int
+    recovered: int
+    deaths: int
+    active: int
+
+@dataclass(frozen=True)
+class Monthly(Collection[Month]):
+    values: [Month]
