@@ -25,3 +25,15 @@ class Month:
 @dataclass(frozen=True)
 class Monthly(Collection[Month]):
     values: [Month]
+
+@dataclass(frozen=True)
+class Day:
+    date: str
+    positive: int
+    recovered: int
+    deaths: int
+    active: int
+
+@dataclass(frozen=True)
+class Daily(Collection[Day]):
+    values: [Day]
