@@ -9,7 +9,7 @@ from src.domain.periodically_data import Yearly
 from fastapi.testclient import TestClient
 
 from app import app
-class PeriodicallyData(unittest.TestCase):
+class YearlyData(unittest.TestCase):
     def test_periodically_data_repository_given_empty_value_returns_Yearly_object(self):
         repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
         data = repository.get_yearly_data()
