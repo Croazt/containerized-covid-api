@@ -175,3 +175,10 @@ class MonthlyData(unittest.TestCase):
             data = response.json()
             assert ('month' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
             assert data['data'][0]['month'].split('-')[0] == '2020'
+
+    def test_monthly_data_resource_given_year_params_invalid_since_and_upto_value_return_empty_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/monthly/2020?since=aa&upto=aa')
+            data = response.json()
+            assert response.status_code == 422
+            self.assertIsInstance(data, dict)
