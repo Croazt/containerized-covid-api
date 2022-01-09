@@ -128,3 +128,9 @@ class MonthlyData(unittest.TestCase):
             response = client.get('/monthly?since=2021.1')
             data = response.json()
             assert ('month' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
+
+    def test_monthly_data_resource_given_upto_value_return_dict_contain_data_range_upto_date_given(self):
+        with TestClient(app) as client:
+            response = client.get('/monthly?upto=2020.5')
+            data = response.json()
+            assert ('month' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
