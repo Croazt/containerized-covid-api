@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Response
-from src.rest import general_data_resource, yearly_data_resource
+from src.rest import general_data_resource, yearly_data_resource, monthly_data_resource
 
 def create_app():
     app = FastAPI(
@@ -19,6 +19,12 @@ def create_app():
         yearly_data_resource.router,
         prefix="/yearly",
         tags=['yearly-data']
+    )
+    
+    app.include_router(
+        monthly_data_resource.router,
+        prefix="/monthly",
+        tags=['monthly-data']
     )
     
     return app
