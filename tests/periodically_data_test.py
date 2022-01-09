@@ -50,3 +50,9 @@ class PeriodicallyData(unittest.TestCase):
             response = client.get('/yearly?upto=2020')
             data = response.json()
             assert ('year' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
+
+    def test_periodically_data_resource_given_since_and_upto_value_return_dict_contain_data_range_since_to_upto(self):
+        with TestClient(app) as client:
+            response = client.get('/yearly?since=2019&upto=2020')
+            data = response.json()
+            assert ('year' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
