@@ -159,4 +159,10 @@ class DailyData(unittest.TestCase):
             assert response.status_code == 200
             self.assertIsInstance(data, dict)
             assert data['data']['date']  == '2020-05-02'
-            
+
+    def test_daily_data_resource_given_invalid_year_month_and_day_params_return_empty_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/daily/2025/1/2')
+            data = response.json()
+            assert response.status_code == 204
+            self.assertIsInstance(data, str)
