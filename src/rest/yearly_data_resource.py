@@ -12,8 +12,8 @@ router = APIRouter()
 def get_yearly_data(response: Response, request: Request):
     repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
 
-    since = None
-    upto = None
+    since = '2020'
+    upto = 'nodata'
     
     if 'since' in request.query_params :
         if not request.query_params['since'].isnumeric() :
@@ -25,16 +25,7 @@ def get_yearly_data(response: Response, request: Request):
             return CustomResponse().error_response(response, {}, "Query params Error!", 406)
         upto = request.query_params['upto']
 
-    data = []
-    if since != None and upto != None:
-        data = repository.get_yearly_data(since=since, upto=upto)
-    elif since != None:
-        data = repository.get_yearly_data(since=since)
-    elif upto != None:
-        data = repository.get_yearly_data(upto=upto)
-    else:
-        data = repository.get_yearly_data()
-
+    data = repository.get_yearly_data(since=since, upto=upto)
     if len(data.values) < 1:
         return json.dumps(CustomResponse().error_response(response, {}, "No data found!", 204))
 
