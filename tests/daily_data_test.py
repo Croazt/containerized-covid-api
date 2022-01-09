@@ -59,3 +59,9 @@ class DailyData(unittest.TestCase):
             data = response.json()
             assert ('date' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
     
+    def test_daily_data_resource_given_invalid_since_and_upto_value_return_empty_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/daily?since=aa&upto=aa')
+            data = response.json()
+            assert response.status_code == 422
+            self.assertIsInstance(data, dict)
