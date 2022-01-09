@@ -182,3 +182,11 @@ class MonthlyData(unittest.TestCase):
             data = response.json()
             assert response.status_code == 422
             self.assertIsInstance(data, dict)
+
+    def test_monthly_data_resource_given_year_and_month_params_return_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/monthly/2020/5')
+            data = response.json()
+            assert response.status_code == 200
+            self.assertIsInstance(data, dict)
+
