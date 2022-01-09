@@ -7,24 +7,9 @@ from src.utils.custom_response import CustomResponse
 
 router = APIRouter()
 
-
 @router.get("")
-def get_yearly_data(response: Response, request: Request):
+def get_yearly_data(response: Response,  since: int = 2022, upto: int = 9999999):
     repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
-
-    since = '2020'
-    upto = 'nodata'
-    
-    if 'since' in request.query_params :
-        if not request.query_params['since'].isnumeric() :
-            return CustomResponse().error_response(response, {}, "Query params Error!", 406)
-        since = request.query_params['since']
-
-    if 'upto' in request.query_params :
-        if not request.query_params['upto'].isnumeric() :
-            return CustomResponse().error_response(response, {}, "Query params Error!", 406)
-        upto = request.query_params['upto']
-
     data = repository.get_yearly_data(since=since, upto=upto)
     if len(data.values) < 1:
         return json.dumps(CustomResponse().error_response(response, {}, "No data found!", 204))
@@ -35,10 +20,8 @@ def get_yearly_data(response: Response, request: Request):
 @router.get("/{year}")
 def get_yearly_data(year: int, response: Response):
     repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
-
+    
     data = repository.get_yearly_data(since=year, upto=year)
- 
-
     if len(data.values) < 1:
         return json.dumps(CustomResponse().error_response(response, {}, "No data found!", 204))
 

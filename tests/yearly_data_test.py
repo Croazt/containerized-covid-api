@@ -17,19 +17,19 @@ class YearlyData(unittest.TestCase):
 
     def test_periodically_data_repository_given_since_value_returns_Yearly_object_between_the_range_of_since_and_date_now(self):
         repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
-        data = repository.get_yearly_data(since="2021")
+        data = repository.get_yearly_data(since=2021)
         self.assertIsInstance(data, Yearly)
         assert data.values[0]['year'] == 2021
 
     def test_periodically_data_repository_given_since_and_upto_value_returns_Yearly_object_between_the_range_of_since_and_upto(self):
         repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
-        data = repository.get_yearly_data(since="2021",upto='2024')
+        data = repository.get_yearly_data(since=2021,upto=2024)
         self.assertIsInstance(data, Yearly)
         assert data.values[0]['year'] == 2021
 
     def test_periodically_data_repository_given_since_value_that_more_than_upto_value_returns_Empty_Yearly_object(self):
         repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
-        data = repository.get_yearly_data(since="2025",upto='2024')
+        data = repository.get_yearly_data(since=2025,upto=2024)
         self.assertIsInstance(data, Yearly)
         assert data.values == []
 
@@ -47,7 +47,7 @@ class YearlyData(unittest.TestCase):
 
     def test_periodically_data_resource_given_upto_value_return_dict_contain_data_range_upto_to_year_now(self):
         with TestClient(app) as client:
-            response = client.get('/yearly?upto=2020')
+            response = client.get('/yearly?upto=2022')
             data = response.json()
             assert ('year' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
 
@@ -61,7 +61,7 @@ class YearlyData(unittest.TestCase):
         with TestClient(app) as client:
             response = client.get('/yearly?since=aa&upto=aa')
             data = response.json()
-            assert response.status_code == 406
+            assert response.status_code == 422
             self.assertIsInstance(data, dict)
 
     def test_periodically_data_resource_given_specific_year_to_path_return_dict(self):
