@@ -151,4 +151,12 @@ class DailyData(unittest.TestCase):
             data = response.json()
             assert response.status_code == 422
             self.assertIsInstance(data, dict)
+    
+    def test_daily_data_resource_given_year_month_and_day_params_return_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/daily/2020/5/2')
+            data = response.json()
+            assert response.status_code == 200
+            self.assertIsInstance(data, dict)
+            assert data['data']['date']  == '2020-05-02'
             
