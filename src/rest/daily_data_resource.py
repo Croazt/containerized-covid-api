@@ -24,3 +24,24 @@ def get_daily_data(response: Response, request: Request, since : str = '2020.1.1
         return json.dumps(CustomResponse().error_response(response, {}, "No data found!", 204))
 
     return CustomResponse().success_response(response, data.values, "Data per month found!",)
+
+@router.get("/{year}")
+def get_daily_given_year_data(year: int,response: Response, request: Request, since: str = '1.1', upto : str = '12.31'):
+    repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
+
+    since = concatenate_date(year, since)
+    upto = concatenate_date(year, upto)
+
+    since_pat = check_params_pattern('date',since)
+    upto_pat = check_params_pattern('date',upto)
+   
+    if (not since_pat) or (upto != 'nodata' and not (upto_pat)):
+        return CustomResponse().error_response(response, {}, "Query params not matched with our rule!", 422)
+
+    data = repository.get_daily_data(since=since, upto=upto)
+    if len(data.values) < 1:
+        return json.dumps(CustomResponse().error_response(response, {}, "No data found!", 204))
+
+    return CustomResponse().success_response(response, data.values, "Data for specific year found!",)
+
+    
