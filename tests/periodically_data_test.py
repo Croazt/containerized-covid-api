@@ -190,3 +190,9 @@ class MonthlyData(unittest.TestCase):
             assert response.status_code == 200
             self.assertIsInstance(data, dict)
 
+    def test_monthly_data_resource_given_invalid_year_and_month_params__return_empty_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/monthly/2025/1')
+            data = response.json()
+            assert response.status_code == 204
+            self.assertIsInstance(data, str)
