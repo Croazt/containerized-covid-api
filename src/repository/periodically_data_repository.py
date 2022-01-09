@@ -13,6 +13,9 @@ class PeriodicallyDataRepository(PeriodicallyDataRepository):
 
     def get_yearly_data(self, since = "2020", upto = "2024") -> Yearly:
         data = self.covid_driver.get_data_periodic()
+        
+        if  upto < since :
+            return Yearly(values=[])
 
         res = data.groupby(['year'])['positive','recovered','deaths'].sum().reset_index()
         res = res[res['year'].between(int(since),int(upto))]
