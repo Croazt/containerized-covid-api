@@ -45,7 +45,7 @@ class PeriodicallyDataRepository(PeriodicallyDataRepository):
         data = self.covid_driver.get_data_periodic()
         
         if upto == 'nodata' :
-            upto = concatenate_date(self.date_now.year, self.date_now.month, self.date_now.date)
+            upto = concatenate_date(self.date_now.year, self.date_now.month, self.date_now.day)
 
         upto, since = reformat_upto_since(upto,since)
 
