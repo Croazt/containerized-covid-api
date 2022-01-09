@@ -63,3 +63,10 @@ class YearlyData(unittest.TestCase):
             data = response.json()
             assert response.status_code == 406
             self.assertIsInstance(data, dict)
+
+    def test_periodically_data_resource_given_specific_year_to_path_return_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/yearly/2020')
+            data = response.json()
+            assert response.status_code == 200
+            self.assertIsInstance(data, dict)
