@@ -25,3 +25,9 @@ class PeriodicallyData(unittest.TestCase):
         data = repository.get_yearly_data(since="2021",upto='2024')
         self.assertIsInstance(data, Yearly)
         assert data.values[0]['year'] == 2021
+
+    def test_periodically_data_repository_given_since_value_that_more_than_upto_value_returns_Empty_Yearly_object(self):
+        repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
+        data = repository.get_yearly_data(since="2025",upto='2024')
+        self.assertIsInstance(data, Yearly)
+        assert data.values == []
