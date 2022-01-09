@@ -61,4 +61,5 @@ class PeriodicallyData(unittest.TestCase):
         with TestClient(app) as client:
             response = client.get('/yearly?since=aa&upto=aa')
             data = response.json()
-            self.assertIsInstance(data, str)
+            assert response.status_code == 406
+            self.assertIsInstance(data, dict)

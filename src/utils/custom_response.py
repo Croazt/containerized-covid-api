@@ -8,4 +8,4 @@ class CustomResponse:
     def error_response(self, res, data, message, code_status=404):
         res.status_code = code_status
         response = {'ok': False, 'data': data, 'message': message}
-        return json.dumps(response)
+        return response
