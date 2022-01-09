@@ -116,3 +116,10 @@ class DailyData(unittest.TestCase):
             self.assertIsInstance(data, dict)
             assert ('date' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
             assert data['data'][0]['date'].split('-')[0] +'-' +data['data'][0]['date'].split('-')[1]  == '2021-05'
+    
+    def test_daily_data_resource_given_invalid_year_and_month_params__return_empty_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/daily/2025/1')
+            data = response.json()
+            assert response.status_code == 204
+            self.assertIsInstance(data, str)
