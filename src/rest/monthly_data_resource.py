@@ -70,3 +70,17 @@ def get_yearly_data(year: int, response: Response, request: Request):
         return json.dumps(CustomResponse().error_response(response, {}, "No data found!", 204))
 
     return CustomResponse().success_response(response, data.values, "Data for specific year found!",)
+
+    
+@router.get("/{year}/{month}")
+def get_yearly_data(year: int, month : int, response: Response, request: Request):
+    repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
+
+    query = str(year) + '.'+ str(month).zfill(2)
+
+    data = repository.get_monthly_data(since=query, upto=query)
+ 
+    if len(data.values) < 1:
+        return json.dumps(CustomResponse().error_response(response, {}, "No data found!", 204))
+
+    return CustomResponse().success_response(response, data.values[0], "Data for specific year found!",)
