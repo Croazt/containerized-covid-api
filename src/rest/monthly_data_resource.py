@@ -35,3 +35,38 @@ def get_monthly_data(response: Response, request: Request):
         return json.dumps(CustomResponse().error_response(response, {}, "No data found!", 204))
 
     return CustomResponse().success_response(response, data.values, "Data per month found!",)
+
+@router.get("/{year}")
+def get_yearly_data(year: int, response: Response, request: Request):
+    repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
+
+    since, upto = 1, 12
+    
+    if 'since' in request.query_params :
+        temp = request.query_params['since']
+        if not temp.isnumeric() :
+            return CustomResponse().error_response(response, {}, "Query params not matched with our rule!", 422)
+        
+        if not int(temp) < since :
+            since = request.query_params['since']
+    
+    if 'upto' in request.query_params :
+        temp = request.query_params['upto']
+        if not temp.isnumeric() :
+            return CustomResponse().error_response(response, {}, "Query params not matched with our rule!", 422)
+        
+        if not int(temp) > upto :
+            upto = request.query_params['upto']
+
+    since = str(year) + '.' + str(since)
+    upto = str(year) + '.' + str(upto)
+
+    if upto < since :
+        since, upto = upto, since
+
+    data = repository.get_monthly_data(since=since, upto=upto)
+ 
+    if len(data.values) < 1:
+        return json.dumps(CustomResponse().error_response(response, {}, "No data found!", 204))
+
+    return CustomResponse().success_response(response, data.values, "Data for specific year found!",)
