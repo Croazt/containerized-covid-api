@@ -14,7 +14,7 @@ from app import app
 class MonthlyData(unittest.TestCase):
     def test_periodically_data_repository_given_empty_value_returns_monthly_object(self):
         repository = MonthlyDataRepository(covid_driver=CovidDataDriver())
-        data = repository.get_monthly_data()
+        data = repository.get_data()
         self.assertIsInstance(data, Monthly)
 
     def test_periodically_data_repository_given_string_returning_modified_string(self):
@@ -26,7 +26,7 @@ class MonthlyData(unittest.TestCase):
 
     def test_periodically_data_repository_given_since_value_returns_Monthly_object_between_the_range_of_since_and_date_now(self):
         repository = MonthlyDataRepository(covid_driver=CovidDataDriver())
-        data = repository.get_monthly_data(since="2021.1")
+        data = repository.get_data(since="2021.1")
         date = dt.datetime.now()
         monthup = str(date.year) + '-' + str(date.month).zfill(2)
         monthsin =  replace_fillz('2021.1')
@@ -37,7 +37,7 @@ class MonthlyData(unittest.TestCase):
 
     def test_periodically_data_repository_given_since_and_value_returns_Monthly_object_between_the_range_of_since_and_upto(self):
         repository = MonthlyDataRepository(covid_driver=CovidDataDriver())
-        data = repository.get_monthly_data(since="2021.1", upto="2021.5")
+        data = repository.get_data(since="2021.1", upto="2021.5")
         date = dt.datetime.now()
         
         monthup = replace_fillz('2021.5')
