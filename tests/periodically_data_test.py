@@ -37,4 +37,4 @@ class PeriodicallyData(unittest.TestCase):
         with TestClient(app) as client:
             response = client.get('/yearly')
             data = response.json()
-            print(data)
+            assert ('year' in data['data'][0][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])

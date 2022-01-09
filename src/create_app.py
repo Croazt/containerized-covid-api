@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Response
-from src.rest import general_data_resource
+from src.rest import general_data_resource, yearly_data_resource
 
 def create_app():
     app = FastAPI(
@@ -9,9 +9,16 @@ def create_app():
         openapi_url="/openapi.json",
         docs_url="/docs",
         redoc_url="/redoc"
-    )
-    
+        )
+
     @app.get('/')
     def get_general_data(response : Response):
         return general_data_resource.get_general_data(response)
+
+    app.include_router(
+        yearly_data_resource.router,
+        prefix="/yearly",
+        tags=['yearly-data']
+    )
+    
     return app
