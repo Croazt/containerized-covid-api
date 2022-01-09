@@ -1,3 +1,5 @@
+import json
+
 from src.repository.periodically_data_repository import PeriodicallyDataRepository
 from src.driver.covid_data import CovidDataDriver
 from fastapi import FastAPI, APIRouter, Response, Request
