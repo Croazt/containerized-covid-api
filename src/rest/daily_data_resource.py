@@ -10,7 +10,7 @@ from src.utils.pattern_checker import check_params_pattern
 router = APIRouter()
 
 @router.get("")
-def get_daily_data(response: Response, request: Request, since : str = '2020.1.1', upto : str = 'nodata'):
+def get_daily_data(response: Response, since : str = '2020.1.1', upto : str = 'nodata'):
     repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
 
     since_pat = check_params_pattern('date',since)
@@ -26,7 +26,7 @@ def get_daily_data(response: Response, request: Request, since : str = '2020.1.1
     return CustomResponse().success_response(response, data.values, "Data per month found!",)
 
 @router.get("/{year}")
-def get_daily_given_year_data(year: int,response: Response, request: Request, since: str = '1.1', upto : str = '12.31'):
+def get_daily_given_year_data(year: int,response: Response, since: str = '1.1', upto : str = '12.31'):
     repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
 
     since = concatenate_date(year, since)
@@ -45,7 +45,7 @@ def get_daily_given_year_data(year: int,response: Response, request: Request, si
     return CustomResponse().success_response(response, data.values, "Data for specific year found!",)
 
 @router.get("/{year}/{month}")
-def get_daily_given_year_data(year: int,month:int,response: Response, request: Request, since: int = 1, upto : int = 31):
+def get_daily_given_year_data(year: int,month:int,response: Response, since: int = 1, upto : int = 31):
     repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
 
     since = concatenate_date(year, month, since)
@@ -63,5 +63,21 @@ def get_daily_given_year_data(year: int,month:int,response: Response, request: R
 
     return CustomResponse().success_response(response, data.values, "Data for specific year found!",)
 
+@router.get("/{year}/{month}/{day}")
+def get_daily_given_year_data(year: int,month:int, day:int, response: Response):
+    repository = PeriodicallyDataRepository(covid_driver=CovidDataDriver())
+
+    query = concatenate_date(year, month, day)
+
+    params_pat = check_params_pattern('date',query)
+   
+    if (not params_pat):
+        return CustomResponse().error_response(response, {}, "Params not matched with our rule!", 422)
+
+    data = repository.get_daily_data(since=query, upto=query)
+    if len(data.values) < 1:
+        return json.dumps(CustomResponse().error_response(response, {}, "No data found!", 204))
+
+    return CustomResponse().success_response(response, data.values[0], "Data for specific year found!",)
     
     
