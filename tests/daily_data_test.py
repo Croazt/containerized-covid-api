@@ -53,6 +53,12 @@ class DailyData(unittest.TestCase):
             data = response.json()
             assert ('date' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
     
+    def test_daily_data_resource_given_upto_value_return_dict_contain_data_range_since_to_month_now(self):
+        with TestClient(app) as client:
+            response = client.get('/daily?upto=2021.1.1')
+            data = response.json()
+            assert ('date' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
+    
     def test_daily_data_resource_given_since_and_upto_value_return_dict_contain_data_range_since_to_upto(self):
         with TestClient(app) as client:
             response = client.get('/daily?since=2019.1.2&upto=2021.1.3')
