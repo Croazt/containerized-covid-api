@@ -40,3 +40,10 @@ class DailyData(unittest.TestCase):
         self.assertIsInstance(data, Daily)
         assert data.values[0]['date'] == monthsin
         assert data.values[-1]['date'] == monthup
+
+    def test_daily_data_resource_return_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/daily')
+            data = response.json()
+            assert ('date' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
+    
