@@ -123,3 +123,10 @@ class DailyData(unittest.TestCase):
             data = response.json()
             assert response.status_code == 204
             self.assertIsInstance(data, str)
+
+    def test_daily_data_resource_given_year_month_params_with_since_value_return_dict_contain_data_range_since_to_date_now(self):
+        with TestClient(app) as client:
+            response = client.get('/daily/2021/5?since=1')
+            data = response.json()
+            assert ('date' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
+            assert data['data'][0]['date'].split('-')[0] +'-' +data['data'][0]['date'].split('-')[1]  == '2021-05'
