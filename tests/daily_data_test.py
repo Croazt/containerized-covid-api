@@ -107,3 +107,12 @@ class DailyData(unittest.TestCase):
             data = response.json()
             assert response.status_code == 422
             self.assertIsInstance(data, dict)
+            
+    def test_daily_data_resource_given_year_and_month_params_return_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/daily/2021/5')
+            data = response.json()
+            assert response.status_code == 200
+            self.assertIsInstance(data, dict)
+            assert ('date' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
+            assert data['data'][0]['date'].split('-')[0] +'-' +data['data'][0]['date'].split('-')[1]  == '2021-05'
