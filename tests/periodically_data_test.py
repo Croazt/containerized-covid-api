@@ -6,6 +6,7 @@ from src.driver.covid_data import CovidDataDriver
 from src.repository.periodically_data_repository import PeriodicallyDataRepository
 from fastapi.testclient import TestClient
 from src.domain.periodically_data import Yearly
+from fastapi.testclient import TestClient
 
 from app import app
 class PeriodicallyData(unittest.TestCase):
@@ -31,3 +32,9 @@ class PeriodicallyData(unittest.TestCase):
         data = repository.get_yearly_data(since="2025",upto='2024')
         self.assertIsInstance(data, Yearly)
         assert data.values == []
+
+    def test_periodically_data_resource_return_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/yearly')
+            data = response.json()
+            print(data)
