@@ -117,4 +117,8 @@ class MonthlyData(unittest.TestCase):
         assert data.values[0]['month'] == monthsin
         assert data.values[-1]['month'] == monthup
 
-        
+    def test_monthly_data_resource_return_dict(self):
+        with TestClient(app) as client:
+            response = client.get('/monthly')
+            data = response.json()
+            assert ('month' in data['data'][0]) and ('positive' in data['data'][0]) and ('recovered' in data['data'][0]) and ('deaths' in data['data'][0])
