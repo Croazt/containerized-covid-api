@@ -44,8 +44,8 @@ class CovidDataDriver(CovidDataDriverInt):
 
         i = 0
         for data_daily in data:
-            d[i] = {'key': data_daily['key'], 'positive': data_daily['jumlah_positif']['value'], 'recovered':  data_daily['jumlah_sembuh']
-                    ['value'], 'deaths': data_daily['jumlah_meninggal']['value']}
+            d[i] = {'key': data_daily['key'], 'positive': data_daily['jumlah_positif_kum']['value'], 'recovered':  data_daily['jumlah_sembuh_kum']
+                    ['value'], 'deaths': data_daily['jumlah_meninggal_kum']['value']}
             i = i+1
 
         df_data_periodic = df_data_periodic.from_dict(d,orient="index")
