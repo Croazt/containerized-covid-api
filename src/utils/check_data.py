@@ -5,7 +5,7 @@ def check_if_data_result_is_null(is_type, response, repository, since, upto, ind
 
     data = repository.get_data(since, upto)
     if len(data.values) < 1:
-        return json.dumps(CustomResponse().error_response(response, {}, "No data found!", 204))
+        return CustomResponse().error_response(response, {}, "No data found!", 204)
 
     if individual:
         return CustomResponse().success_response(response, data.values[0], "Data for specific "+is_type+" found!",)

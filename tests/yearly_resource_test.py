@@ -53,4 +53,4 @@ class YearlyDataResourceTest(unittest.TestCase):
             response = client.get('/yearly/2025')
             data = response.json()
             assert response.status_code == 204
-            self.assertIsInstance(data, str)
+            self.assertIsInstance(data, dict)
