@@ -5,7 +5,11 @@ This project is an API program that serve information about Corona Virus Desease
 ---
 ## **Usage**
 * ### **Local**
-    1. Clone  
+    Prequisites :  
+     - Python 3.9  
+    
+    Steps :      
+    1. Clone
         `git clone https://github.com/Croazt/containerized-covid-api`
     2. Install required python module  
         `pip install -r requirements/requirements.txt`
@@ -15,9 +19,14 @@ This project is an API program that serve information about Corona Virus Desease
         `http://127.0.0.1:8080`  
         <br>
 * ### **Docker**
+    The docker image is accessible from the following URL : https://hub.docker.com/repository/docker/muhammadfachry/containerized-covid-api-id
+
+    Steps :
     1. Pull image  
+        `#pull images from docker hub`
         `docker pull muhammadfachry/containerized-covid-api-id`
     2. Run container  
+        `#running container that accessible throug localhost:8080`
         `docker run -p 8080:8080 --[your container name] covid-api  muhammadfachry/containerized-covid-api-id`
     3. Access endpoint  
         `http://localhost:8080`

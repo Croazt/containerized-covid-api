@@ -32,8 +32,8 @@ class MonthlyDataRepositoryTest(unittest.TestCase):
         monthsin =  replace_fillz('2021.1')
 
         self.assertIsInstance(data, Monthly)
-        assert data.values[0]['month'] == monthsin
-        assert data.values[-1]['month'] == monthup
+        assert data.values[0].month == monthsin
+        assert data.values[-1].month == monthup
 
     def test_periodically_data_repository_given_since_and_value_returns_Monthly_object_between_the_range_of_since_and_upto(self):
         repository = MonthlyDataRepository(covid_driver=CovidDataDriver())
@@ -44,5 +44,5 @@ class MonthlyDataRepositoryTest(unittest.TestCase):
         monthsin = replace_fillz('2021.1')
 
         self.assertIsInstance(data, Monthly)
-        assert data.values[0]['month'] == monthsin
-        assert data.values[-1]['month'] == monthup
+        assert data.values[0].month == monthsin
+        assert data.values[-1].month == monthup

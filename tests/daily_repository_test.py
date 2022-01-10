@@ -27,8 +27,8 @@ class DailyDataRepositoryTest(unittest.TestCase):
         monthsin = replace_fillz('2021.1.1')
         
         self.assertIsInstance(data, Daily)
-        assert data.values[0]['date'] == monthsin
-        assert data.values[-1]['date'] == monthup or data.values[-1]['date'] == monthup_yest
+        assert data.values[0].date == (monthsin)
+        assert data.values[-1].date == str(monthup) or data.values[-1]['date'] == str(monthup_yest)
 
     def test_periodically_data_repository_given_since_and_upto_value_returns_Daily_object_between_the_range_of_since_and_upto(self):
         repository = DailyDataRepository(covid_driver=CovidDataDriver())
@@ -39,5 +39,5 @@ class DailyDataRepositoryTest(unittest.TestCase):
         monthsin = replace_fillz('2021.1.3')
         
         self.assertIsInstance(data, Daily)
-        assert data.values[0]['date'] == monthsin
-        assert data.values[-1]['date'] == monthup
+        assert data.values[0].date == str(monthsin)
+        assert data.values[-1].date == str(monthup)
