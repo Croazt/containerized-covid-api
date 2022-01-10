@@ -92,8 +92,9 @@ class DailyDataResourceTest(unittest.TestCase):
         with TestClient(app) as client:
             response = client.get('/daily/2025/1')
             data = response.json()
-            assert response.status_code == 204
+            assert response.status_code == 400
             self.assertIsInstance(data, dict)
+            assert data['data'] == {}
 
     def test_daily_data_resource_given_year_month_params_with_since_value_return_dict_contain_data_range_since_to_date_now(self):
         with TestClient(app) as client:
@@ -135,5 +136,6 @@ class DailyDataResourceTest(unittest.TestCase):
         with TestClient(app) as client:
             response = client.get('/daily/2025/1/2')
             data = response.json()
-            assert response.status_code == 204
+            assert response.status_code == 400
             self.assertIsInstance(data, dict)
+            assert data['data'] == {}
