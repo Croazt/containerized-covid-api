@@ -16,3 +16,9 @@ class TestRoot(unittest.TestCase):
             response = client.get('/')
             data = response.json()
             assert ('total_positive' in data['data']) and ('total_recovered' in data['data']) and ('total_deaths' in data['data']) and ('total_active' in data['data'])
+
+    def test_wrong_endpoint_returns_404_status(self):
+        with TestClient(app) as client:
+            response = client.get('/test/404')
+            data = response.json()
+            assert response.status_code == 404
