@@ -11,7 +11,7 @@ from src.domain.periodically_data import Monthly
 from fastapi.testclient import TestClient
 
 from app import app
-class MonthlyDataRepository(unittest.TestCase):
+class MonthlyDataRepositoryTest(unittest.TestCase):
     def test_periodically_data_repository_given_empty_value_returns_monthly_object(self):
         repository = MonthlyDataRepository(covid_driver=CovidDataDriver())
         data = repository.get_data()
