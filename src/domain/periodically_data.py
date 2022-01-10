@@ -1,8 +1,19 @@
-from dataclasses import dataclass
-
+from pydantic.dataclasses import dataclass
+from typing import List
 from src.domain.collection import Collection
 
-@dataclass(frozen=True)
+@dataclass
+class General:
+    total_positive: int
+    total_recovered: int
+    total_deaths: int
+    total_active: int
+    new_positive: int
+    new_recovered: int
+    new_active: int
+    new_deaths: int
+
+@dataclass
 class Year:
     year: str
     positive: int
@@ -10,11 +21,11 @@ class Year:
     deaths: int
     active: int
 
-@dataclass(frozen=True)
+@dataclass
 class Yearly(Collection[Year]):
-    values: [Year]
+    values: List[Year]
 
-@dataclass(frozen=True)
+@dataclass
 class Month:
     month: str
     positive: int
@@ -22,11 +33,11 @@ class Month:
     deaths: int
     active: int
 
-@dataclass(frozen=True)
+@dataclass
 class Monthly(Collection[Month]):
-    values: [Month]
+    values: List[Month]
 
-@dataclass(frozen=True)
+@dataclass
 class Day:
     date: str
     positive: int
@@ -34,6 +45,6 @@ class Day:
     deaths: int
     active: int
 
-@dataclass(frozen=True)
+@dataclass
 class Daily(Collection[Day]):
-    values: [Day]
+    values: List[Day]

@@ -5,7 +5,7 @@ from attr import dataclass
 T = TypeVar('T')
 
 
-@dataclass(frozen=True)
+@dataclass
 class Collection(Generic[T]):
     values: [T]
 

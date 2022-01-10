@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Response
 from src.rest import general_data_resource, yearly_data_resource, monthly_data_resource, daily_data_resource
-
+from src.utils.base_model import GeneralResponseModel
 def create_app():
     app = FastAPI(
         title="Containerized COVID API",
@@ -11,8 +11,8 @@ def create_app():
         redoc_url="/redoc"
         )
 
-    @app.get('/')
-    def get_general_data(response : Response):
+    @app.get('/', response_model=GeneralResponseModel)
+    async def get_general_data(response : Response):
         return general_data_resource.get_general_data(response)
 
     app.include_router(
