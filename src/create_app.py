@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Response
 from src.rest import general_data_resource, yearly_data_resource, monthly_data_resource, daily_data_resource
-from src.utils.base_model import GeneralResponseModel
+from src.utils.docs_utils.base_model import GeneralResponseModel
 def create_app():
     app = FastAPI(
         title="Containerized COVID API",
