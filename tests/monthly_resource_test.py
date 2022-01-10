@@ -89,5 +89,6 @@ class MonthlyDataResourceTest(unittest.TestCase):
         with TestClient(app) as client:
             response = client.get('/monthly/2025/1')
             data = response.json()
-            assert response.status_code == 204
+            assert response.status_code == 400
             self.assertIsInstance(data, dict)
+            assert data['data'] == {}
