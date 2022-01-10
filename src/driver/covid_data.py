@@ -1,9 +1,11 @@
 import json
 import requests
 import pandas as pd
+import warnings
 from src.interface.driver.covid_data import CovidDataDriverInt
 class CovidDataDriver(CovidDataDriverInt):
     def __init__(self):
+        warnings.simplefilter(action='ignore', category=FutureWarning)
         self.init_data = self.init_data()
         self.data_total = self.init_data_total()
         self.data_periodic = self.init_data_periodic()
